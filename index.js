@@ -11,17 +11,34 @@ const ngrok = require('ngrok'),
 const ifaces = os.networkInterfaces();
 
 /**
- * Callback for processing after server is established.
- *
- * @callback serverCallback
- * @param {object} options - Configuration options for http-server
+ * @module tnl
  */
+
+/**
+ * Settings for configuring HttpServer and ngrok.
+ * @typedef {Object} Options
+ * @property {number} port - Port to use (defaults to `8080`)
+ * @property {string} host - Address to use (defaults to `'0.0.0.0'`)
+ * @property {boolean} ssl - Enable https
+ * @property {string} root - Path to local folder (defaults to ./public if the folder exists, and ./ otherwise)
+ * @property {number} cache - Set cache time (in seconds) for cache-control max-age header, e.g. -c10 for 10 seconds (defaults to `3600`). To disable caching, use -c-1
+ * @property {boolean} showDir - Show directory listings (defaults to `true`)
+ * @property {boolean} autoIndex - Display autoIndex (defaults to `true`)
+ * @property {boolean} gzip - Serves `file.js.gz` in place of `file.js` if gzipped version exists
+ * @property {boolean} robots - Provide a /robots.txt (whose content is `User-agent: *\nDisallow: /`)
+ * @property {string} ext - Default file extension if none supplied (defaults to `'html'`)
+ * @property {string} proxy - Proxies all requests which can't be resolved locally to the given url
+ * @property {boolean} open - Opens ngrok url in browser immmediatley
+ * @property {string} ngrokUrl - Public url create from ngrok, added to {@link Options} in {@link TunnelCallback}
+*/
 
 /**
  * Starts a local server using http-server.
  * 
- * @param {object} options Configuration options for http-server
- * @param {serverCallback} cb - Callback function
+ * @static
+ * @param {Options} options Configuration options for http-server
+ * @param {ServerCallback} cb - Callback function
+ * @returns {HttpServer} Instance of HttpServer
  */
 function createServer(options, cb) {
     let port = options.port || 8080,
@@ -61,20 +78,24 @@ function createServer(options, cb) {
 
         if (typeof cb === "function") cb(options);
     });
+
+    return server;
 }
 
 /**
- * Callback for processing after tunnel is established.
+ * Callback for processing after server is established.
  *
- * @callback tunnelCallback
- * @param {object} options - Configuration options for ngrok
+ * @callback ServerCallback
+ * @param {Options} options - Configuration options for http-server
  */
 
 /**
  * Starts a secure tunnel to a server using ngrok.
  * 
- * @param {object} options - Configuration options for ngrok
- * @param {tunnelCallback} cb - Callback function
+ * @static
+ * @param {Options} options - Configuration options for ngrok
+ * @param {TunnelCallback} cb - Callback function
+ * @returns {ngrok} Instance of ngrok
  */
 function createTunnel(options, cb) {
     let opts = {
@@ -102,11 +123,21 @@ function createTunnel(options, cb) {
 
         if (typeof cb === "function") cb(options);
     });
+
+    return ngrok;
 }
+
+/**
+ * Callback for processing after tunnel is established.
+ *
+ * @callback TunnelCallback
+ * @param {Options} options - Configuration options for ngrok
+ */
 
 /**
  * Stops tunnel and server processes.
  * 
+ * @static
  */
 function kill() {
     console.log('ngrok stopped.'.red);
@@ -115,7 +146,7 @@ function kill() {
     process.exit();
 }
 
-module.exports = {
+module.exports = exports = {
     createServer: createServer,
     createTunnel: createTunnel,
     kill: kill

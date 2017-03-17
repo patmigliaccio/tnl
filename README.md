@@ -29,25 +29,6 @@ For example, to change the default port and open in a new browser window immedia
 
 ## Available Options
 
-For a complete list of options refer to `http-server`'s [avalable options](https://www.npmjs.com/package/http-server#available-options).
-
-`-o` Open browser window after starting the server
-
-`-p` Port to use (defaults to 8080)
-
-`-a` Address to use (defaults to 0.0.0.0)
-
-`-d` Show directory listings (defaults to 'True')
-
-`-i` Display autoIndex (defaults to 'True')
-
-`-e` or `--ext` Default file extension if none supplied (defaults to 'html')
-
-`-s` or `--silent` Suppress log messages from output
-
-`--cors` Enable CORS via the Access-Control-Allow-Origin header
-
-`-c` Set cache time (in seconds) for cache-control max-age header, e.g. -c10 for 10 seconds (defaults to '3600'). To disable caching, use -c-1.
-
-`-P` or `--proxy` Proxies all requests which can't be resolved locally to the given url. e.g.: -P
+See [Options](docs/API.md#Options).
+For a complete list of *potential* options refer to `http-server`'s [avalable options](https://www.npmjs.com/package/http-server#available-options).
 

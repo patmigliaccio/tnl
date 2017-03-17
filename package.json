@@ -21,7 +21,7 @@
   "scripts": {
     "start": "node ./bin/tnl",
     "format": "js-beautify index.js ./bin/tnl.js -r",
-    "docs": "jsdoc2md index.js > ./docs/README.md"
+    "docs": "jsdoc2md index.js > ./docs/API.md"
   },
   "dependencies": {
     "colors": "^1.1.2",
