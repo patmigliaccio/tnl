@@ -1,10 +1,10 @@
 # tnl: simple secure tunnel to a local directory
 
-`tnl` is a quick and easy way to create a public url with a secure tunnel to a local directory. Utilizing [ngrok](https://ngrok.com/) and [http-server](https://github.com/indexzero/http-server), within three characters you can have your directory forwarded to the outside.
+`tnl` is a quick and easy way to create a public url with a secure tunnel to a local directory. Utilizing [ngrok](https://ngrok.com/) and [http-server](https://github.com/indexzero/http-server), within three characters you can have your directory forwarded to the outside. Excellent for testing on mobile as well as fast feedback from clients.
 
 ![tnl Example](img/example.gif)
 
-# Installation
+## Installation
 
 Using `npm`:
 
