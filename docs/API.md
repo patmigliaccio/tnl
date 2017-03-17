@@ -7,6 +7,7 @@
         * [.createServer(options, cb)](#module_tnl.createServer) ⇒ <code>HttpServer</code>
         * [.createTunnel(options, cb)](#module_tnl.createTunnel) ⇒ <code>ngrok</code>
         * [.kill()](#module_tnl.kill)
+        * [.silence(silent)](#module_tnl.silence)
     * _inner_
         * [~Options](#module_tnl..Options) : <code>Object</code>
         * [~ServerCallback](#module_tnl..ServerCallback) : <code>function</code>
@@ -44,6 +45,17 @@ Starts a secure tunnel to a server using ngrok.
 Stops tunnel and server processes.
 
 **Kind**: static method of <code>[tnl](#module_tnl)</code>  
+<a name="module_tnl.silence"></a>
+
+### tnl.silence(silent)
+Suppresses logging by setting 'log' function to 'noop' (no operation)
+
+**Kind**: static method of <code>[tnl](#module_tnl)</code>  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| silent | <code>boolean</code> | *Optional* `false` turns logging back on (defaults to `true`) |
+
 <a name="module_tnl..Options"></a>
 
 ### tnl~Options : <code>Object</code>
@@ -66,7 +78,7 @@ Settings for configuring HttpServer and ngrok.
 | ext | <code>string</code> | Default file extension if none supplied (defaults to `'html'`) |
 | proxy | <code>string</code> | Proxies all requests which can't be resolved locally to the given url |
 | open | <code>boolean</code> | Opens ngrok url in browser immmediatley |
-| ngrokUrl | <code>string</code> | Public url create from ngrok, added to [Options](Options) in [TunnelCallback](TunnelCallback) |
+| publicUrl | <code>string</code> | Public url created from ngrok, added to [Options](Options) in [TunnelCallback](TunnelCallback) |
 
 <a name="module_tnl..ServerCallback"></a>
 
@@ -89,4 +101,5 @@ Callback for processing after tunnel is established.
 | Param | Type | Description |
 | --- | --- | --- |
 | options | <code>Options</code> | Configuration options for ngrok |
+| url | <code>string</code> | Public ngrok url that server is forwarded to |
 

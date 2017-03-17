@@ -5,6 +5,7 @@
 const tnl = require('../index.js'),
     argv = require('optimist').boolean('cors').argv,
     portfinder = require('portfinder'),
+    opener = require('opener'),
     version = require('../package').version;
 
 if (argv.v) return console.log(version);
@@ -38,6 +39,11 @@ if (options.ssl) {
     };
 }
 
+if (argv.s || argv.silent) {
+    options.silent = true;
+    tnl.silence();
+}
+
 if (!options.port) {
     portfinder.basePort = 8080;
     portfinder.getPort((err, port) => {
@@ -45,10 +51,22 @@ if (!options.port) {
             throw err;
         }
         options.port = port;
-        tnl.createServer(options, tnl.createTunnel);
+        tnl.createServer(options, createTunnel);
     });
 } else {
-    tnl.createServer(options, tnl.createTunnel);
+    tnl.createServer(options, createTunnel);
+}
+
+function createTunnel(options) {
+    tnl.createTunnel(options, (options, url) => {
+        if (!options.silent) console.log('Hit CTRL-C to stop the server and tunnel');
+
+        if (options.open) {
+            opener(url, {
+                command: options.open !== true ? options.open : null
+            });
+        }
+    });
 }
 
 if (process.platform === 'win32') {

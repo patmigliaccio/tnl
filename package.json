@@ -1,6 +1,6 @@
 {
   "name": "tnl",
-  "version": "1.0.0",
+  "version": "1.0.2",
   "description": "simple secure tunnel to a local directory using ngrok and http-server",
   "main": "index.js",
   "repository": {
