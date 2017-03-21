@@ -1,16 +1,15 @@
-#!/usr/bin/env node --harmony
+#!/usr/bin/env node
 
 'use strict';
 
-const ngrok = require('ngrok'),
+var ngrok = require('ngrok'),
     httpServer = require('http-server'),
     os = require('os'),
     colors = require('colors');
 
-const ifaces = os.networkInterfaces(),
-    noop = function() {};
-
-let log = console.log;
+var ifaces = os.networkInterfaces(),
+    noop = function() {},
+    log = console.log;
 
 /**
  * @module tnl
@@ -43,13 +42,13 @@ let log = console.log;
  * @returns {HttpServer} Instance of HttpServer
  */
 function createServer(options, cb) {
-    let port = options.port || 8080,
+    var port = options.port || 8080,
         host = options.host,
         ssl = options.ssl;
 
-    let server = httpServer.createServer(options);
-    server.listen(port, host, () => {
-        let canonicalHost = host === '0.0.0.0' ? '127.0.0.1' : host,
+    var server = httpServer.createServer(options);
+    server.listen(port, host, function() {
+        var canonicalHost = host === '0.0.0.0' ? '127.0.0.1' : host,
             protocol = ssl ? 'https://' : 'http://';
 
         log(['Starting up http-server, serving '.yellow,
@@ -100,11 +99,11 @@ function createServer(options, cb) {
  * @returns {ngrok} Instance of ngrok
  */
 function createTunnel(options, cb) {
-    let opts = {
+    var opts = {
         addr: options.port || 8080
     };
 
-    ngrok.connect(opts, (err, url) => {
+    ngrok.connect(opts, function(err, url) {
         if (err) {
             throw err;
         }

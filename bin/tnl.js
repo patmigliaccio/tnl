@@ -1,8 +1,8 @@
-#!/usr/bin/env node --harmony
+#!/usr/bin/env node
 
 'use strict';
 
-const tnl = require('../index.js'),
+var tnl = require('../index.js'),
     argv = require('optimist').boolean('cors').argv,
     portfinder = require('portfinder'),
     opener = require('opener'),
@@ -10,7 +10,7 @@ const tnl = require('../index.js'),
 
 if (argv.v) return console.log(version);
 
-let options = {
+var options = {
     port: argv.p || parseInt(process.env.PORT, 10),
     host: argv.a || '0.0.0.0',
     ssl: !!argv.S || !!argv.ssl,
@@ -46,7 +46,7 @@ if (argv.s || argv.silent) {
 
 if (!options.port) {
     portfinder.basePort = 8080;
-    portfinder.getPort((err, port) => {
+    portfinder.getPort(function(err, port) {
         if (err) {
             throw err;
         }
@@ -58,7 +58,7 @@ if (!options.port) {
 }
 
 function createTunnel(options) {
-    tnl.createTunnel(options, (options, url) => {
+    tnl.createTunnel(options, function(options, url) {
         if (!options.silent) console.log('Hit CTRL-C to stop the server and tunnel');
 
         if (options.open) {
@@ -73,7 +73,7 @@ if (process.platform === 'win32') {
     require('readline').createInterface({
         input: process.stdin,
         output: process.stdout
-    }).on('SIGINT', () => {
+    }).on('SIGINT', function() {
         process.emit('SIGINT');
     });
 }
