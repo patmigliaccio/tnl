@@ -1,8 +1,5 @@
 var tnl = require('..'),
-    http = require('http'),
-    net = require('net'),
-    request = require('request'),
-    URL = require('url');
+    request = require('request');
 
 var port = 8080;
 
@@ -13,6 +10,7 @@ before(function(done) {
 
 after(function(done) {
     tnl.kill();
+    done();
 });
 
 describe('create local http server', function() {
@@ -52,7 +50,7 @@ describe('create public tunnel', function() {
     });
 
     describe('making request to public url', function() {
-        var request;
+        var response;
 
         before(function(done) {
             request.get(publicUrl, function(err, res) {
