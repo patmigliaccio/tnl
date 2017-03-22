@@ -20,15 +20,18 @@
   ],
   "scripts": {
     "start": "node ./bin/tnl",
-    "format": "js-beautify index.js ./bin/tnl.js -r",
-    "docs": "jsdoc2md index.js > ./docs/API.md"
+    "format": "js-beautify index.js ./bin/tnl.js ./test/tnl.spec.js -r",
+    "docs": "jsdoc2md index.js > ./docs/API.md",
+    "test": "node ./node_modules/mocha/bin/mocha"
   },
   "dependencies": {
+    "chai": "^3.5.0",
     "colors": "^1.1.2",
     "commander": "^2.9.0",
     "http-server": "^0.9.0",
     "js-beautify": "^1.6.11",
     "jsdoc-to-markdown": "^3.0.0",
+    "mocha": "^3.2.0",
     "ngrok": "^2.2.6",
     "opener": "^1.4.3",
     "optimist": "^0.6.1",

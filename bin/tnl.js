@@ -78,5 +78,10 @@ if (process.platform === 'win32') {
     });
 }
 
-process.on('SIGINT', tnl.kill);
-process.on('SIGTERM', tnl.kill);
+function kill() {
+    tnl.kill();
+    process.exit();
+}
+
+process.on('SIGINT', kill);
+process.on('SIGTERM', kill);

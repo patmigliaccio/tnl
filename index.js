@@ -9,7 +9,8 @@ var ngrok = require('ngrok'),
 
 var ifaces = os.networkInterfaces(),
     noop = function() {},
-    log = console.log;
+    log = console.log,
+    _server;
 
 /**
  * @module tnl
@@ -42,17 +43,18 @@ var ifaces = os.networkInterfaces(),
  * @returns {HttpServer} Instance of HttpServer
  */
 function createServer(options, cb) {
-    var port = options.port || 8080,
+    var options = options || {},
+        port = options.port || 8080,
         host = options.host,
         ssl = options.ssl;
 
-    var server = httpServer.createServer(options);
-    server.listen(port, host, function() {
+    _server = httpServer.createServer(options);
+    _server.listen(port, host, function() {
         var canonicalHost = host === '0.0.0.0' ? '127.0.0.1' : host,
             protocol = ssl ? 'https://' : 'http://';
 
         log(['Starting up http-server, serving '.yellow,
-            server.root.cyan,
+            _server.root.cyan,
             ssl ? (' through'.yellow + ' https'.cyan) : '',
             '\nAvailable on:'.yellow
         ].join(''));
@@ -80,7 +82,7 @@ function createServer(options, cb) {
         if (typeof cb === "function") cb(options);
     });
 
-    return server;
+    return _server;
 }
 
 /**
@@ -99,6 +101,7 @@ function createServer(options, cb) {
  * @returns {ngrok} Instance of ngrok
  */
 function createTunnel(options, cb) {
+    options = options || {};
     var opts = {
         addr: options.port || 8080
     };
@@ -138,7 +141,7 @@ function kill() {
     log('ngrok stopped.'.red);
     ngrok.kill();
     log('http-server stopped.'.red);
-    process.exit();
+    _server.close();
 }
 
 /**
