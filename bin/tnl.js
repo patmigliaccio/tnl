@@ -6,6 +6,8 @@ var tnl = require('../index.js'),
     argv = require('optimist').boolean('cors').argv,
     portfinder = require('portfinder'),
     opener = require('opener'),
+    clipboardy = require('clipboardy'),
+    colors = require('colors'),
     version = require('../package').version;
 
 if (argv.v) return console.log(version);
@@ -22,7 +24,8 @@ var options = {
     robots: argv.r || argv.robots,
     ext: argv.e || argv.ext,
     proxy: argv.P || argv.proxy,
-    open: argv.o
+    open: argv.o,
+    ngrokCopy: argv.n || argv.ncopy
 };
 
 if (argv.cors) {
@@ -59,13 +62,18 @@ if (!options.port) {
 
 function createTunnel(options) {
     tnl.createTunnel(options, function(options, url) {
-        if (!options.silent) console.log('Hit CTRL-C to stop the server and tunnel');
-
+        if (options.ngrokCopy) {
+            console.log('Copied the ngrok URL to clipboard.'.blue);
+            clipboardy.writeSync(url);
+        }
+        
         if (options.open) {
             opener(url, {
                 command: options.open !== true ? options.open : null
             });
         }
+
+        if (!options.silent) console.log('Hit CTRL-C to stop the server and tunnel.');
     });
 }
 

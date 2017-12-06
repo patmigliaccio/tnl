@@ -31,6 +31,8 @@ For a complete list of *potential* options refer to `http-server`'s [avalable op
 
 `-o` Open browser window after starting the server and tunnel
 
+`-n` or `--ncopy` Copy the ngrok URL to the clipboard for pasting
+
 `-p` Port to use (defaults to `8080`)
 
 `-a` Address to use (defaults to `'0.0.0.0'`)
