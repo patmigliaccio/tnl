@@ -5,6 +5,11 @@
 ![tnl Example](img/example.gif)
 
 ## Installation
+Using `yarn`:
+
+    yarn global add tnl
+
+-- or --
 
 Using `npm`:
 
